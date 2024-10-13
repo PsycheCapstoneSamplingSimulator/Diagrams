@@ -1,0 +1,53 @@
+graph TB
+	subgraph godot[Godot Engine]
+		physicsEngine[Physics Engine]
+		renderingEngine[Rendering Engine]
+		scriptEngine[Script Engine]
+	end
+
+	subgraph project[Game Project]
+		subgraph components[Object Components]
+			subgraph scripts[Scripts]
+				craftSimBehavior[Craft Simulation Behavior]
+				worldMovementBehavior[World Movement Manager]
+				psycheSurfaceBehavior[Psyche Surface Generation]
+				controlsBehavior[User Controls Dispatcher]
+			end
+			
+			subgraph physics[Physics Components]
+				craftRigidbody[Craft Rigidbody]
+				psycheCollider[Pysche Collision Hull]
+			end
+			
+			subgraph materials[Materials]
+				psycheSurfaceMaterial[Psyche Surface Material]
+				craftMaterial[Spacecraft Material]
+			end
+		end
+		
+		subgraph objects[Objects]
+			craftObject[Spacecraft]
+			psycheObject[Psyche Asteroid]
+			worldObject[World State Manager]
+		end
+	end
+	
+	%% object -> component relationships
+	worldObject -->|uses| controlsBehavior
+	worldObject -->|uses| worldMovementBehavior
+	
+	craftObject -->|uses| craftSimBehavior
+	craftObject -->|uses| craftRigidbody
+	
+	psycheObject -->|uses| psycheSurfaceBehavior
+	psycheObject -->|uses| psycheCollider
+	
+	%% component -> component relationships
+	controlsBehavior -->|uses| craftSimBehavior
+	craftSimBehavior -->|uses| craftRigidbody
+	psycheCollider -->|uses| craftRigidbody
+
+	%% engine -> component relationships
+	scriptEngine -->|uses| scripts
+	physicsEngine -->|uses| physics
+	renderingEngine -->|uses| materials

@@ -1,0 +1,1 @@
+This repository houses our Mermaid (.mmd) files for generating diagrams. View them at [MermaidChart's official website](https://www.mermaidchart.com/) by copying it into the preview window.
